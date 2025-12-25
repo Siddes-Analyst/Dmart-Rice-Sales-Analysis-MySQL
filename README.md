@@ -7,3 +7,5 @@ This project analyzes D-Mart rice brand sales data using MySQL. 15 business-orie
 - Fake Discount Detection
 - Top-Performing Products
 - Location-Wise Trends
+
+📈 **Q1. Year-wise Revenue and Profit Trend**
