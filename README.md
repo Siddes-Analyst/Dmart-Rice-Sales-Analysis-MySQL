@@ -96,3 +96,25 @@ order by Year, Month;
 ## 📷 Output
 
 ![](Screenshots/04.jpg)
+
+---
+
+### <b> 📈 Q5. Product-Level Profit Margin Analysis:
+#### *Compute profit margin percentage for each product, Then display top 10 products with highest margin.*
+
+```MySQL
+select top 10 Product_Name, 
+sum(Total_Selling_Price) as "Sales", 
+sum(Profit) as "Profit",
+cast(
+(cast(sum(Profit) as decimal(10,2))
+/ 
+cast(sum(Total_Selling_Price) as decimal(10,2))
+)* 100.0 as decimal(10,2)) as "Profit_Margin_Percentage"
+from Rice_Sales
+group by Product_Name
+order by Profit_Margin_Percentage desc;
+```
+## 📷 Output
+
+![](Screenshots/05.jpg)
