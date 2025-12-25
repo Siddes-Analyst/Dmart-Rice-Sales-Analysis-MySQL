@@ -66,9 +66,9 @@ group by Location;
 
 ### <b> 📈 Q4. Month-wise Sales Growth Analysis:
 #### *For each year, calculate:
-•	Current month sales
-•	Previous month sales
-•	Percentage growth or decline using LAG () window function*
+-	Current month sales
+-	Previous month sales
+-	Percentage growth or decline using LAG () window function*
 
 ```MySQL
 with Month_Wise as (
@@ -95,4 +95,4 @@ order by Year, Month;
 ```
 ## 📷 Output
 
-![](Screenshots/04.JPG)
+![](Screenshots/04.jpg)
