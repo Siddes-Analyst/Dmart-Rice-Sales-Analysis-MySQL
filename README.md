@@ -213,3 +213,36 @@ from Avg_Product;
 ## 📷 Output
 
 ![](Screenshots/09.png)
+
+---
+
+### <b> 📈 Q10. Repeat Sales Analysis:
+#### Find products that were sold in more than 10 different months and show:
+-	Total units sold
+-	Total revenue
+
+```MySQL
+with product_selection as
+(
+select Product_Name, Month_Name, Month,
+SUM(Unit_Sold) as Unit,
+SUM(Total_Selling_Price) as Sales
+from Rice_Sales
+group by Product_Name, Month_Name, Month
+),
+Quantity_sel as (
+select Product_Name from product_selection
+group by Product_Name having COUNT(*) > 10
+)
+select 
+pr.Product_Name,
+SUM(pr.Unit) as Unit_Sold,
+SUM(pr.Sales) as Total_Revenue
+from product_selection pr join Quantity_sel Q
+on pr.Product_Name = q.Product_Name
+group by pr.Product_Name
+order by Total_Revenue desc;
+```
+## 📷 Output
+
+![](Screenshots/10.jpg)
