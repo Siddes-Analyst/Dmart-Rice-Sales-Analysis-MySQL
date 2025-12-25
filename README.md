@@ -63,3 +63,36 @@ group by Location;
 ![](Screenshots/03.png)
 
 ---
+
+### <b> 📈 Q4. Month-wise Sales Growth Analysis:
+#### *For each year, calculate:
+•	Current month sales
+•	Previous month sales
+•	Percentage growth or decline using LAG () window function*
+
+```MySQL
+with Month_Wise as (
+select Year, Month, 
+sum(Total_Selling_Price) as Current_Month
+from Rice_Sales
+group by Year, Month
+),
+Lag_Month_Wise as (
+select Year, Month, Current_Month,
+LAG(Current_Month) over (partition by Year order by Month) as Previous_Month
+from Month_Wise
+)
+select Year, Month,
+Current_Month, Previous_Month,
+case
+when Previous_Month IS NULL or Previous_Month = 0 then Null
+Else
+Cast((Current_Month - Previous_Month) * 100.0/Current_Month as decimal(10,2))
+end
+as Percentage_Growth
+from Lag_Month_Wise
+order by Year, Month;
+```
+## 📷 Output
+
+![](Screenshots/04.JPG)
