@@ -16,7 +16,7 @@ This project analyzes D-Mart rice brand sales data using MySQL. 15 business-orie
 ![](Screenshots/00.png)
 
 ---
-### <b> 📈 Q1. Year-wise Revenue and Profit Trend:
+### <b> 📈 Q1. Year-wise Revenue and Profit Trend
 #### *Write a query to calculate total sales revenue, total profit, and total units sold for each year.  Order the result by profit in descending order.*
 
 ```MySQL
@@ -33,7 +33,7 @@ group by Year order by Profit desc;
 
 ---
 
-### <b> 📈 Q2. Top 5 Most Profitable Rice Brands:
+### <b> 📈 Q2. Top 5 Most Profitable Rice Brands
 #### *Find the top 5 rice brands that generated the highest total profit across all years.*
 
 ```MySQL
@@ -48,7 +48,7 @@ GROUP BY Rice_Brand order by Total_Profit desc;
 
 ---
 
-### <b> 📈 Q3. Location Performance Ranking:
+### <b> 📈 Q3. Location Performance Ranking
 #### *Rank all store locations based on total selling price using RANK () or DENSE_RANK ().*
 
 ```MySQL
@@ -64,7 +64,7 @@ group by Location;
 
 ---
 
-### <b> 📈 Q4. Month-wise Sales Growth Analysis:
+### <b> 📈 Q4. Month-wise Sales Growth Analysis
 #### For each year, calculate:
 -	Current month sales
 -	Previous month sales
@@ -99,7 +99,7 @@ order by Year, Month;
 
 ---
 
-### <b> 📈 Q5. Product-Level Profit Margin Analysis:
+### <b> 📈 Q5. Product-Level Profit Margin Analysis
 #### *Compute profit margin percentage for each product, Then display top 10 products with highest margin.*
 
 ```MySQL
@@ -121,7 +121,7 @@ order by Profit_Margin_Percentage desc;
 
 ---
 
-### <b> 📈 Q6. Category Contribution to Total Revenue:
+### <b> 📈 Q6. Category Contribution to Total Revenue
 #### Find:
 -	Total revenue for each Product Category
 -	Percentage contribution of each category to overall sales
@@ -152,7 +152,7 @@ order by Percentage_Contribution desc;
 
 ---
 
-### <b> 📈 Q7. Detect Loss-Making Products:
+### <b> 📈 Q7. Detect Loss-Making Products
 #### *Identify products where total profit is negative and show.*
 -	Product Name
 -	Location
@@ -171,7 +171,7 @@ order by Profit desc
 
 ---
 
-### <b> 📈 Q8. Best Performing Brand by Each Location:
+### <b> 📈 Q8. Best Performing Brand by Each Location
 #### *For each location, find the brand with the highest total profit using ROW_NUMBER ().*
 
 ```MySQL
@@ -191,7 +191,7 @@ from Brand_Profit where Brand_Rank = 1;
 
 ---
 
-### <b> 📈 Q9. High vs Low Ticket Products:
+### <b> 📈 Q9. High vs Low Ticket Products
 #### Classify products into:
 -	•	High Value (Avg Selling Price > 300)
 -	•	Medium Value (100–300)
@@ -216,7 +216,7 @@ from Avg_Product;
 
 ---
 
-### <b> 📈 Q10. Repeat Sales Analysis:
+### <b> 📈 Q10. Repeat Sales Analysis
 #### Find products that were sold in more than 10 different months and show:
 -	Total units sold
 -	Total revenue
@@ -249,7 +249,7 @@ order by Total_Revenue desc;
 
 ---
 
-### <b> 📈 Q11. Cost vs Selling Price Variance:
+### <b> 📈 Q11. Cost vs Selling Price Variance
 #### For each product, calculate:
 -	Average Purchase Cost
 -	Average Selling Price
@@ -273,3 +273,34 @@ where Price_Difference > 100;
 ## 📷 Output
 
 ![](Screenshots/11.png)
+
+---
+
+### <b> 📈 Q12. Year-over-Year (YoY) Profit Comparison
+#### For every product category:
+-	Show current year profit
+-	Previous year profit
+-	YoY profit difference
+
+```MySQL
+with Current_Profit as (
+select YEAR, Product_Category, SUM(Profit) as Current_Year
+from Rice_Sales 
+group by YEAR, Product_Category
+),
+Previous_Profit as (
+select YEAR, Product_Category, Current_Year,
+LAG(Current_Year) Over(Partition by Product_Category Order by Product_Category, YEAR) as Previous_Year
+from Current_Profit
+)
+select YEAR, Product_Category, Current_Year, Previous_Year,
+case when Previous_Year IS NULL then NULL 
+ELSE
+Current_Year - Previous_Year
+END
+as YOY_Profit_Difference
+from Previous_Profit;
+```
+## 📷 Output
+
+![](Screenshots/12.png)
