@@ -27,6 +27,6 @@ SUM(Profit) as "Profit"
 FROM Rice_Sales 
 group by Year order by Profit desc;
 ```
-| Output |
+## 📷 Output
 
-| ![](01.jpg)
+![](04_Images/Q_05_Monthly_Quantity_sold_cat.png)
