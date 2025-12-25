@@ -29,4 +29,4 @@ group by Year order by Profit desc;
 ```
 | Output |
 
-| !(01.png)
+| ![](01.png)
