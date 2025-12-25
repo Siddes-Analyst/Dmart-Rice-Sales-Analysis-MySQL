@@ -149,3 +149,22 @@ order by Percentage_Contribution desc;
 ## 📷 Output
 
 ![](Screenshots/06.png)
+
+---
+
+### <b> 📈 Q7. Detect Loss-Making Products:
+#### Identify products where total profit is negative and show:
+-	Product Name
+-	Location
+-	Total Loss
+
+```MySQL
+select Product_Name, Location, sum(Profit) as Profit
+from Rice_Sales
+group by Product_Name, Location
+having sum(Profit) < 0
+order by Profit desc
+```
+## 📷 Output
+
+![](Screenshots/07.png)
