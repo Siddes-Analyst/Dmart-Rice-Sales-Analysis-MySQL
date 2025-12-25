@@ -29,4 +29,4 @@ group by Year order by Profit desc;
 ```
 ## 📷 Output
 
-![](04_Images/Q_05_Monthly_Quantity_sold_cat.png)
+![](Screenshots/01.png)
