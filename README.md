@@ -337,3 +337,62 @@ order by Product_Name;
 ## 📷 Output
 
 ![](Screenshots/13.jpg)
+
+---
+
+### <b> 📈 Q14. Contribution of Top 20% Products
+#### Using NTILE (5) or ranking:
+-	•	Find top 20% products by revenue
+-	•	Calculate how much percentage of total revenue they contribute
+
+```MySQL
+with Product_total as
+(
+select Product_Name, Sum(Total_Selling_Price) as Product_Sum
+from Rice_Sales group by Product_Name
+),
+Total_Pro_Sum as (
+select
+SUM(Product_Sum) as Total_Sum
+from Product_total
+),
+First_half as (
+select Product_Name, Product_Sum,
+NTILE(5) over (order by Product_Sum desc) as Product_Sep
+from Product_total
+),
+top_20_per as (
+select Product_Name, Product_Sum, Product_Sep
+from First_half where Product_Sep = 1
+)
+select p.Product_Name, p.Product_Sum, t.Total_Sum,
+cast((p.Product_Sum * 100.0) / NULLIF(t.Total_Sum, 0) as decimal (10,2)) as Percentage_Contributed
+from top_20_per p cross join Total_Pro_Sum t
+order by Percentage_Contributed desc;
+```
+## 📷 Output
+
+![](Screenshots/14.png)
+
+---
+
+### <b> 📈 Q15. Fake Discount Detection
+#### Identify products where:
+-	Per_Unit_Selling_Price < Per_Unit_Purchase_Cost
+  Show:
+-	Product Name
+-	Location
+-	Loss per unit
+
+```MySQL
+select Location, Product_Name,
+Per_Unit_Purchase_Cost as Purchase_Cost,
+Per_Unit_Selling_Price as Selling_Price,
+(Per_Unit_Purchase_Cost - Per_Unit_Selling_Price) as Loss_Per_Unit
+from Rice_Sales
+where Per_Unit_Selling_Price < Per_Unit_Purchase_Cost
+order by Location, Product_Name
+```
+## 📷 Output
+
+![](Screenshots/15.png)
