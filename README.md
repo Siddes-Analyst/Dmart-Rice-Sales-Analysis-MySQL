@@ -117,4 +117,4 @@ order by Profit_Margin_Percentage desc;
 ```
 ## 📷 Output
 
-![](Screenshots/05.jpg)
+![](Screenshots/05.png)
