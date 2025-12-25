@@ -168,3 +168,23 @@ order by Profit desc
 ## 📷 Output
 
 ![](Screenshots/07.png)
+
+---
+
+### <b> 📈 Q8. Best Performing Brand by Each Location:
+#### For each location, find the brand with the highest total profit using ROW_NUMBER ():
+
+```MySQL
+With Brand_Profit as 
+(
+select Location, Rice_Brand,SUM(Profit) as Profit,
+ROW_NUMBER() over(partition by Location order by sum(Profit) desc) as Brand_Rank
+from Rice_Sales
+group by Location, Rice_Brand
+)
+select Location, Rice_Brand, Profit, Brand_Rank
+from Brand_Profit where Brand_Rank = 1;
+```
+## 📷 Output
+
+![](Screenshots/08.png)
