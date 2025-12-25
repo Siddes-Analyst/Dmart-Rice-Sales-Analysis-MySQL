@@ -30,3 +30,20 @@ group by Year order by Profit desc;
 ## 📷 Output
 
 ![](Screenshots/01.png)
+
+---
+
+### <b> 📈 Q2. Top 5 Most Profitable Rice Brands:
+#### *Find the top 5 rice brands that generated the highest total profit across all years.*
+
+```MySQL
+select top 5 Rice_Brand,
+sum(Profit) as "Total_Profit"
+from Rice_Sales 
+GROUP BY Rice_Brand order by Total_Profit desc;
+```
+## 📷 Output
+
+![](Screenshots/02.png)
+
+---
