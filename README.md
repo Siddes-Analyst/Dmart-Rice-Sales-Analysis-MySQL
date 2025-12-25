@@ -304,3 +304,36 @@ from Previous_Profit;
 ## 📷 Output
 
 ![](Screenshots/12.png)
+
+---
+
+### <b> 📈 Q13. High Demand Low Profit Products
+#### Find products where:
+-	Total Units Sold is above average
+-	But profit is below average
+#### This shows operational inefficiency.
+
+```MySQL
+with SUM_Product as (
+Select Product_Name, Product_ID, 
+SUM(Unit_Sold) as Total_Unit_Sold,
+SUM(Profit) as Total_Product_Profit
+from Rice_Sales
+group by Product_ID, Product_Name 
+),
+Average_Product as (
+select
+AVG(Total_Unit_Sold) as Average_Unit,
+AVG(Total_Product_Profit) as Average_Profit
+from SUM_Product
+)
+select Product_Name,
+Total_Unit_Sold, Average_Unit,
+Total_Product_Profit, Average_Profit
+from SUM_Product cross join Average_Product
+where Total_Unit_Sold > Average_Unit and Total_Product_Profit < Average_Profit
+order by Product_Name;
+```
+## 📷 Output
+
+![](Screenshots/13.jpg)
