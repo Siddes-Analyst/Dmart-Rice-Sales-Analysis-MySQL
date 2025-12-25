@@ -118,3 +118,34 @@ order by Profit_Margin_Percentage desc;
 ## 📷 Output
 
 ![](Screenshots/05.png)
+
+---
+
+### <b> 📈 Q6. Category Contribution to Total Revenue:
+#### Find:
+-	Total revenue for each Product Category
+-	Percentage contribution of each category to overall sales
+
+```MySQL
+with Product_ as
+(
+select Product_Category,
+SUM(Total_Selling_Price) as Product_Sum
+from Rice_Sales
+group by Product_Category
+),
+Total_ as
+(
+select
+SUM(Product_Sum) as Total_Sum
+from Product_
+)
+select p.Product_Category, p.Product_Sum as Product_Revenue, t.Total_Sum as Total_Revenue, 
+CAST((p.Product_Sum * 100.0) / NULLIF(t.Total_Sum, 0) as decimal(10, 2))
+as Percentage_Contribution
+from Product_ p cross join Total_ t
+order by Percentage_Contribution desc;
+```
+## 📷 Output
+
+![](Screenshots/06.png)
