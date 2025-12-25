@@ -246,3 +246,30 @@ order by Total_Revenue desc;
 ## 📷 Output
 
 ![](Screenshots/10.jpg)
+
+---
+
+### <b> 📈 Q11. Cost vs Selling Price Variance:
+#### For each product, calculate:
+-	Average Purchase Cost
+-	Average Selling Price
+-	Price Difference
+#### Then show products where difference > ₹100.
+
+```MySQL
+with Product_Average as
+(
+select Product_Name, 
+AVG(Total_Purchase_Cost) as Purchase_Cost,
+AVG(Total_Selling_Price) as Selling_Price,
+(AVG(Total_Selling_Price) - AVG(Total_Purchase_Cost)) as Price_Difference
+from Rice_Sales
+group by Product_Name
+)
+select Product_Name, Purchase_Cost, Selling_Price, Price_Difference
+from Product_Average 
+where Price_Difference > 100;
+```
+## 📷 Output
+
+![](Screenshots/11.png)
