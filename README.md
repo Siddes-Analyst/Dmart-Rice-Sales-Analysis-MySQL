@@ -153,7 +153,7 @@ order by Percentage_Contribution desc;
 ---
 
 ### <b> 📈 Q7. Detect Loss-Making Products:
-#### Identify products where total profit is negative and show:
+#### *Identify products where total profit is negative and show.*
 -	Product Name
 -	Location
 -	Total Loss
@@ -172,7 +172,7 @@ order by Profit desc
 ---
 
 ### <b> 📈 Q8. Best Performing Brand by Each Location:
-#### For each location, find the brand with the highest total profit using ROW_NUMBER ():
+#### *For each location, find the brand with the highest total profit using ROW_NUMBER ().*
 
 ```MySQL
 With Brand_Profit as 
@@ -188,3 +188,28 @@ from Brand_Profit where Brand_Rank = 1;
 ## 📷 Output
 
 ![](Screenshots/08.png)
+
+---
+
+### <b> 📈 Q9. High vs Low Ticket Products:
+#### Classify products into:
+-	•	High Value (Avg Selling Price > 300)
+-	•	Medium Value (100–300)
+-	•	Low Value (< 100)
+#### Then count how many products fall into each group.
+
+```MySQL
+with Avg_Product as (
+select Product_Name, AVG(Total_Selling_Price) as Average_Price
+from Rice_Sales
+group by Product_Name
+)
+select 
+sum(case when Average_Price < 100 then 1 else 0 end) as Low_Value,
+sum(case when Average_Price >= 100 and Average_Price <= 300 then 1 else 0 end) as Low_Value,
+sum(case when Average_Price > 300 then 1 else 0 end) as High_Value
+from Avg_Product;
+```
+## 📷 Output
+
+![](Screenshots/09.png)
