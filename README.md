@@ -47,3 +47,19 @@ GROUP BY Rice_Brand order by Total_Profit desc;
 ![](Screenshots/02.png)
 
 ---
+
+### <b> 📈 Q3. Location Performance Ranking:
+#### *Rank all store locations based on total selling price using RANK () or DENSE_RANK ().*
+
+```MySQL
+select Location, 
+sum(Total_Selling_Price) as "Total_Selling_Price",
+RANK() over (order by sum(Total_Selling_Price)desc) as "Location_Rank"
+from Rice_Sales 
+group by Location;
+```
+## 📷 Output
+
+![](Screenshots/03.png)
+
+---
